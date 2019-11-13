@@ -1,7 +1,7 @@
-import password_manager.claparser
+#!/usr/bin/env python3
 
 def main():
-    print()
+    CLAParser()
 
 if __name__ == '__main__':
     main()

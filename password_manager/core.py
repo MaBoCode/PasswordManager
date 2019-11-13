@@ -1,46 +1,42 @@
-import string
-import random
+from tabulate import tabulate
+import re, string
 
-class PasswordGenerator:
-    UPPER_CASE_LETTERS = string.ascii_uppercase
-    LOWER_CASE_LETTERS = string.ascii_lowercase
-    DIGITS = string.digits
-    SYMBOLS = string.punctuation
+def generate(website, email, length, save = True):
+    """
+    check website, email
+    generate a new password, encrypt it
+    """
 
-    CHARS = list(UPPER_CASE_LETTERS + LOWER_CASE_LETTERS + DIGITS)
-    random.shuffle(CHARS)
-    CHARS = ''.join(CHARS)
+    website = sanitize_string(website)
+    print(website)
 
-    def __init__(self, length = 8, containsSymbols = False):
-        self.length = length
-        self.containsSymbols = containsSymbols
-        self.password = ""
+    if not is_email_valid(email):
+        return False
 
-        self.generate()
+    return True
 
+generate("fzef", "zef", 15)
 
-    def pickRandomChar(self):
-        return random.choice(PasswordGenerator.CHARS)
+def update(website):
+    return
 
-    def generate(self):
+def delete(website):
+    return
 
-        if self.length < 8:
-            print("Password length must be >= 8")
-            return;
+def save(website, email, password):
+    return
 
-        if self.containsSymbols:
-            PasswordGenerator.CHARS = list(PasswordGenerator.CHARS + PasswordGenerator.SYMBOLS)
-            random.shuffle(PasswordGenerator.CHARS)
-            PasswordGenerator.CHARS = ''.join(PasswordGenerator.CHARS)
+def fetch(website):
+    return
 
-        i = 0
+def sanitize_string(s):
+    unwanted_chars = string.punctuation
+    s.strip()
+    for c in unwanted_chars:
+        s = s.replace(c, '')
+    return s
 
-        while i < self.length:
-            self.password += self.pickRandomChar()
-            i += 1
-        
-    def getPassword(self):
-        return self.password
+def is_email_valid(email):
+    email_regex = "[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}"
 
-    def setLength(self, length):
-        self.length = length
+    return re.fullmatch(email_regex, email)
