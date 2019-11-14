@@ -20,8 +20,14 @@ def display_msg(type, msg):
 def save_to_file(data):
     filename = "data.txt"
 
-    s = data[0] + " " + data[1] + " " + data[2] + "\n"
+    s = data[0] + " " + data[1] + " " + data[2][0] + " " + data[2][1] + "\n"
 
-    with open(filename) as f:
-        f.write(s)
-    f.close()
+    try:
+        with open(filename, 'a') as f:
+            f.write(s)
+    except FileNotFoundError:
+        return False
+    else:
+        return True
+    finally:
+        f.close()

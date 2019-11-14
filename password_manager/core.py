@@ -1,6 +1,7 @@
-from .utils.functions import *
-from .utils.crypto import Crypto
-from .utils.generator import Generator
+from utils.functions import *
+from utils.crypto import Crypto
+from utils.generator import Generator
+from tabulate import tabulate
 
 def generate(website, email, length = 16, save = True):
     """
@@ -23,12 +24,13 @@ def generate(website, email, length = 16, save = True):
     c = Crypto()
     pair = c.encrypt(password)
 
-    data = (website, email, password)
+    data = (website, email, pair)
 
-    if save:
-        save_to_file(data)
+    if not save:
+        print("Your new password for '%s' is: %s" % (website, password))
+        return True
 
-    return True
+    return save_to_file(data)
 
 def update(website):
     return
@@ -37,9 +39,38 @@ def delete(website):
     return
 
 def save(website, email, password):
-    return
+
+    website = sanitize_string(website)
+
+    if not is_email_valid(email):
+        return False
+
+    c = Crypto()
+    pair = c.encrypt(password)
+
+    data = (website, email, pair)
+
+    return save_to_file(data)
 
 def fetch(website):
-    return
+    filename = "data.txt"
+    c = Crypto()
 
-generate("hi", "hi")
+    website = sanitize_string(website)
+
+    result = []
+
+    with open(filename, 'r') as f:
+        for line in f:
+            l = line.split()
+
+            if l[0] == website:
+                result.append(l)
+        
+    f.close()
+
+    return result
+
+#print(save("orange", "matthias.brown@gmail.com", "123456789"))
+#print(fetch("microsoft"))
+#generate("microsoft", "matthias.brown@gmail.com", 64)

@@ -10,10 +10,10 @@ class Crypto:
         f = Fernet(key)
         enc_password = f.encrypt(plain_password.encode())
 
-        return (key, enc_password)
+        return (key.decode(), enc_password.decode())
 
     def decrypt(self, pair):
-        key, password = pair
+        key, password = pair[0].encode(), pair[1].encode()
         f = Fernet(key)
         dec_password = f.decrypt(password)
 
