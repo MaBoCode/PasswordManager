@@ -1,4 +1,5 @@
 import re, string
+from tabulate import tabulate
 
 def sanitize_string(s):
     unwanted_chars = string.punctuation
@@ -31,3 +32,12 @@ def save_to_file(data):
         return True
     finally:
         f.close()
+
+def handle_user_input(msg):
+    res = sanitize_string(str(input(msg)))
+
+    return res
+
+def display_data(data, headers):
+    t = tabulate(data, headers)
+    print(t)

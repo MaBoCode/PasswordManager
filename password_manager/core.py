@@ -32,8 +32,60 @@ def generate(website, email, length = 16, save = True):
 
     return save_to_file(data)
 
-def update(website):
-    return
+def update(website, email = None, password = None):
+    change_password, change_email = False, False
+
+    if not website:
+        return False
+
+    website = sanitize_string(website)
+    results = fetch(website)
+
+    if len(results) > 0:
+
+        if email and not is_email_valid(email):
+            display_msg("Error", "Invalid email.")
+            return False
+
+        if password and len(password) < 16:
+            display_msg("Error", "Password too short (> 15).")
+            return False
+
+        display_data(results, ["N°", "Website", "Email", "Key", "Password"])
+
+        entry_num = int(handle_user_input("Which entry you want to change? [enter n°]: "))
+
+        num_list = []
+        for row in results:
+            num_list.append(row[0])
+        
+        if entry_num not in num_list:
+            display_msg("Error", "Entry not in list.")
+            return False
+
+        if not password:
+            res = handle_user_input("Generate a new password ? [y/n]: ")
+
+            if res.lower() == 'y':
+                length = handle_user_input("Password length (> 15): ")
+                
+                g = Generator()
+                password = g.generate() if not length else g.generate(int(length))
+    
+        w_res = handle_user_input("Change website ? [y/n]: ")
+
+        if w_res.lower() == 'y':
+            website = handle_user_input("Website: ")
+
+        #print(str(website) + " " + str(email or '') + " " + str(password or ''))
+
+        #TODO: open file, go the line n and overwrite old values with new values
+
+
+    else:
+        print("No entry for website '%s'." % website)
+        return False
+
 
 def delete(website):
     return
@@ -61,16 +113,20 @@ def fetch(website):
     result = []
 
     with open(filename, 'r') as f:
+        i = 0
         for line in f:
             l = line.split()
 
             if l[0] == website:
+                l.insert(0, i+1)
                 result.append(l)
+            i += 1
         
     f.close()
 
     return result
 
+#update(website="orange")
 #print(save("orange", "matthias.brown@gmail.com", "123456789"))
 #print(fetch("microsoft"))
 #generate("microsoft", "matthias.brown@gmail.com", 64)
