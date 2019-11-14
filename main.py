@@ -1,5 +1,7 @@
 #!/usr/bin/env python3
 
+from password_manager.claparser import CLAParser
+
 def main():
     CLAParser()
 
