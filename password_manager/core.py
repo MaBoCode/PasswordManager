@@ -1,21 +1,34 @@
-from tabulate import tabulate
-import re, string
+from .utils.functions import *
+from .utils.crypto import Crypto
+from .utils.generator import Generator
 
-def generate(website, email, length, save = True):
+def generate(website, email, length = 16, save = True):
     """
     check website, email
     generate a new password, encrypt it
     """
 
     website = sanitize_string(website)
-    print(website)
 
     if not is_email_valid(email):
         return False
 
-    return True
+    g = Generator()
+    password = g.generate(length)
 
-generate("fzef", "zef", 15)
+    if not password:
+        display_msg("Error", "Couldn't generate password.")
+        return False
+    
+    c = Crypto()
+    pair = c.encrypt(password)
+
+    data = (website, email, password)
+
+    if save:
+        save_to_file(data)
+
+    return True
 
 def update(website):
     return
@@ -29,14 +42,4 @@ def save(website, email, password):
 def fetch(website):
     return
 
-def sanitize_string(s):
-    unwanted_chars = string.punctuation
-    s.strip()
-    for c in unwanted_chars:
-        s = s.replace(c, '')
-    return s
-
-def is_email_valid(email):
-    email_regex = "[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}"
-
-    return re.fullmatch(email_regex, email)
+generate("hi", "hi")
