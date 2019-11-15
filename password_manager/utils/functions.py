@@ -30,8 +30,12 @@ def save_to_file(data):
         return False
     else:
         return True
-    finally:
-        f.close()
+
+def delete_line_in_file(n, filename):
+    with open(filename, 'r+') as f:
+        for i, line in enumerate(f):
+            if i+1 == n:
+                f.truncate(len(line))
 
 def handle_user_input(msg):
     res = sanitize_string(str(input(msg)))

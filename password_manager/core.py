@@ -88,6 +88,7 @@ def update(website, email = None, password = None):
 
 
 def delete(website):
+    delete_line_in_file(7, "data.txt")
     return
 
 def save(website, email, password):
@@ -121,11 +122,10 @@ def fetch(website):
                 l.insert(0, i+1)
                 result.append(l)
             i += 1
-        
-    f.close()
 
     return result
 
+delete("test")
 #update(website="orange")
 #print(save("orange", "matthias.brown@gmail.com", "123456789"))
 #print(fetch("microsoft"))
