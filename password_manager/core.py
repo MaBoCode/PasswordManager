@@ -2,6 +2,7 @@ from utils.functions import *
 from utils.crypto import Crypto
 from utils.generator import Generator
 from tabulate import tabulate
+from utils.constants import *
 
 def generate(website, email, length = 16, save = True):
     """
@@ -30,28 +31,47 @@ def generate(website, email, length = 16, save = True):
         print("Your new password for '%s' is: %s" % (website, password))
         return True
 
-    return save_to_file(data)
+    return save_to_file(data, DEFAULT_FILENAME)
 
+"""
+Update one row from file
+
+website     str
+email       str
+password    str
+
+"""
 def update(website, email = None, password = None):
-    change_password, change_email = False, False
 
+    # Website must be set in order to fetch rows
     if not website:
         return False
 
     website = sanitize_string(website)
-    results = fetch(website)
+    results = fetch(website, DEFAULT_FILENAME)
 
+    # Check if any results
     if len(results) > 0:
 
+        # Check email
         if email and not is_email_valid(email):
             display_msg("Error", "Invalid email.")
             return False
 
+        #Check password
         if password and len(password) < 16:
             display_msg("Error", "Password too short (> 15).")
             return False
+        
+        results_display = []
+        c = Crypto()
 
-        display_data(results, ["N°", "Website", "Email", "Key", "Password"])
+        for row in results:
+            l = row[:-2]
+            l.append(c.decrypt((row[-2], row[-1])))
+            results_display.append(l)
+
+        display_data(results_display, ["N°", "Website", "Email", "Password"])
 
         entry_num = int(handle_user_input("Which entry you want to change? [enter n°]: "))
 
@@ -71,26 +91,71 @@ def update(website, email = None, password = None):
                 
                 g = Generator()
                 password = g.generate() if not length else g.generate(int(length))
+                pair = c.encrypt(password)
+            else:
+                pair = (None, None)
+        else:
+            pair = c.encrypt(password)
     
         w_res = handle_user_input("Change website ? [y/n]: ")
 
         if w_res.lower() == 'y':
             website = handle_user_input("Website: ")
 
-        #print(str(website) + " " + str(email or '') + " " + str(password or ''))
+        data = (website, email, pair)
 
-        #TODO: open file, go the line n and overwrite old values with new values
-
-
+        return update_line_in_file(entry_num, data, DEFAULT_FILENAME)
     else:
-        print("No entry for website '%s'." % website)
+        print("No entry for website '%s'" % (website))
         return False
 
-
 def delete(website):
-    delete_line_in_file(7, "data.txt")
-    return
+    # Website must be set in order to fetch rows
+    if not website:
+        return False
 
+    website = sanitize_string(website)
+    results = fetch(website, DEFAULT_FILENAME)
+
+    if(len(results) > 0):
+        results_display = []
+        c = Crypto()
+
+        for row in results:
+            l = row[:-2]
+            l.append(c.decrypt((row[-2], row[-1])))
+            results_display.append(l)
+
+        display_data(results_display, ["N°", "Website", "Email", "Password"])
+
+        entry_num = int(handle_user_input("Which entry you want to delete? [enter n°]: "))
+
+        num_list = []
+        for row in results:
+            num_list.append(row[0])
+        
+        if entry_num not in num_list:
+            display_msg("Error", "Entry not in list.")
+            return False
+        
+        conf_res = handle_user_input("Are you sure you want to delete this entry ? [y/n]: ")
+
+        if conf_res.lower() == 'y':
+            return delete_line_in_file(entry_num, DEFAULT_FILENAME)
+
+        return False
+    else:
+        print("No entry for website '%s'" % (website))
+        return False
+
+"""
+Save website, email, password to file
+
+1. Sanitize all strings
+2. Encrypt password
+3. Send all data to save_to_file function
+
+"""
 def save(website, email, password):
 
     website = sanitize_string(website)
@@ -103,30 +168,6 @@ def save(website, email, password):
 
     data = (website, email, pair)
 
-    return save_to_file(data)
-
-def fetch(website):
-    filename = "data.txt"
-    c = Crypto()
-
-    website = sanitize_string(website)
-
-    result = []
-
-    with open(filename, 'r') as f:
-        i = 0
-        for line in f:
-            l = line.split()
-
-            if l[0] == website:
-                l.insert(0, i+1)
-                result.append(l)
-            i += 1
-
-    return result
+    return save_to_file(data, DEFAULT_FILENAME)
 
 delete("test")
-#update(website="orange")
-#print(save("orange", "matthias.brown@gmail.com", "123456789"))
-#print(fetch("microsoft"))
-#generate("microsoft", "matthias.brown@gmail.com", 64)
