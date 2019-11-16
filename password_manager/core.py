@@ -33,6 +33,30 @@ def generate(website, email, length = 16, save = True):
 
     return save_to_file(data, DEFAULT_FILENAME)
 
+
+"""
+Save website, email, password to file
+
+1. Sanitize all strings
+2. Encrypt password
+3. Send all data to save_to_file function
+
+"""
+def save(website, email, password):
+
+    website = sanitize_string(website)
+
+    if not is_email_valid(email):
+        return False
+
+    c = Crypto()
+    pair = c.encrypt(password)
+
+    data = (website, email, pair)
+
+    return save_to_file(data, DEFAULT_FILENAME)
+
+
 """
 Update one row from file
 
@@ -48,7 +72,7 @@ def update(website, email = None, password = None):
         return False
 
     website = sanitize_string(website)
-    results = fetch(website, DEFAULT_FILENAME)
+    results = fetch_in_file(website, DEFAULT_FILENAME)
 
     # Check if any results
     if len(results) > 0:
@@ -115,7 +139,7 @@ def delete(website):
         return False
 
     website = sanitize_string(website)
-    results = fetch(website, DEFAULT_FILENAME)
+    results = fetch_in_file(website, DEFAULT_FILENAME)
 
     if(len(results) > 0):
         results_display = []
@@ -148,26 +172,30 @@ def delete(website):
         print("No entry for website '%s'" % (website))
         return False
 
-"""
-Save website, email, password to file
+# TODO: fetch function: get the password for the specified website
 
-1. Sanitize all strings
-2. Encrypt password
-3. Send all data to save_to_file function
-
-"""
-def save(website, email, password):
-
+def fetch(website):
+    
+    if not website:
+        return False
+    
     website = sanitize_string(website)
+    results = fetch_in_file(website, DEFAULT_FILENAME)
 
-    if not is_email_valid(email):
+    if(len(results) > 0):
+        results_display = []
+        c = Crypto()
+
+        for row in results:
+            l = row[1:-2]
+            l.append(c.decrypt((row[-2], row[-1])))
+            results_display.append(l)
+
+        display_data(results_display, ["Website", "Email", "Password"])
+        return True
+    else:
+        print("No entry for website '%s'" % (website))
         return False
 
-    c = Crypto()
-    pair = c.encrypt(password)
 
-    data = (website, email, pair)
-
-    return save_to_file(data, DEFAULT_FILENAME)
-
-delete("test")
+fetch('website3')

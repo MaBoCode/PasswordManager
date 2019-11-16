@@ -97,7 +97,7 @@ def delete_line_in_file(n, filename):
         display_msg("Info", "Deleted line %d in `%s`." % (n, filename))
         return True
 
-def fetch(website, filename):
+def fetch_in_file(website, filename):
 
     website = sanitize_string(website)
 
