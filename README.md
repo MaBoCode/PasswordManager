@@ -31,22 +31,28 @@ Run `pma` in your terminal.
 
 ## Code Examples
 Generate a new password for 'Google' with myemail@gmail.com and save it.
-`pma generate -w Google -e myemail@gmail.com -s`
+
+&nbsp;&nbsp;&nbsp;&nbsp;`pma generate -w Google -e myemail@gmail.com -s`
 
 Generate a password of 32 characters for 'Oracle'
-`pma generate -w Oracle -e myemail@oracle.com -n 32 -s`
+
+&nbsp;&nbsp;&nbsp;&nbsp;`pma generate -w Oracle -e myemail@oracle.com -n 32 -s`
 
 Update the email for 'Google'
-`pma update -w Google -e newemail@gmail.com`
+
+&nbsp;&nbsp;&nbsp;&nbsp;`pma update -w Google -e newemail@gmail.com`
 
 Change the password for 'Oracle'
-`pma update -w Oracle -p newOraclePasswordThatIsNotVerySecure`
+
+&nbsp;&nbsp;&nbsp;&nbsp;`pma update -w Oracle -p newOraclePasswordThatIsNotVerySecure`
 
 Delete the entry for 'Google'
-`pma delete -w Google`
+
+&nbsp;&nbsp;&nbsp;&nbsp;`pma delete -w Google`
 
 Show the password and email for 'Oracle'
-`pma fetch -w Oracle`
+
+&nbsp;&nbsp;&nbsp;&nbsp;`pma fetch -w Oracle`
 
 ## Inspiration
 I don't like that Google stores my passwords.
