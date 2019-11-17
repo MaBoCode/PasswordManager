@@ -1,10 +1,15 @@
+# Secret files
 .data
 .keys.key
 data.txt
 
+# Project symlink
+pma
+
+# Unused Folders
 backups/
 __pycache__/
 
+# Drafts
 ideas.txt
-
 tree.py
