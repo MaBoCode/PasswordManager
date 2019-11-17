@@ -19,15 +19,25 @@ You can:
 * python3 - version 3.7.3
 
 ## Setup
-Clone the repo.
 
-Run `pip3 install -r password_manager/requirements.txt` in your terminal.
+```bash
+# Clone this repo.
+$ git clone
 
-Create a symbolic link named `pma` to `main.py`.
+# cd in the repo
+$ cd password_manager
 
-Create a symbolic link named `/bin/pma` to `pma`. (the symlink you created earlier)
+# Install the requirements
+$ pip3 install -r requirements.xt
 
-Run `pma` in your terminal.
+# Create a symbolic link named `pma` to `main.py`.
+$ ln -s main.py pma
+
+# Create a symbolic link named `/bin/pma` to `pma`
+$ ln -s pma /bin/pma
+
+# You're good to go
+$ pma -h
 
 ## Code Examples
 Generate a new password for 'Google' with myemail@gmail.com and save it.
