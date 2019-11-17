@@ -41,13 +41,13 @@ $ pma -h
 ```
 
 ## Code Examples
-* Generate a new password for 'Google' with myemail@gmail.com and save it.
+* Generate a new password for 'Google' with myemail@gmail.com.
 
-&nbsp;&nbsp;&nbsp;&nbsp;`pma generate -w Google -e myemail@gmail.com -s`
+&nbsp;&nbsp;&nbsp;&nbsp;`pma generate -w Google -e myemail@gmail.com`
 
 * Generate a password of 32 characters for 'Oracle'
 
-&nbsp;&nbsp;&nbsp;&nbsp;`pma generate -w Oracle -e myemail@oracle.com -n 32 -s`
+&nbsp;&nbsp;&nbsp;&nbsp;`pma generate -w Oracle -e myemail@oracle.com -n 32`
 
 * Update the email for 'Google'
 
