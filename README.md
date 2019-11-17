@@ -38,6 +38,7 @@ $ ln -s pma /bin/pma
 
 # You're good to go
 $ pma -h
+```
 
 ## Code Examples
 Generate a new password for 'Google' with myemail@gmail.com and save it.
