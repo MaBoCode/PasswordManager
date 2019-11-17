@@ -22,7 +22,7 @@ You can:
 
 ```bash
 # Clone this repo.
-$ git clone
+$ git clone https://github.com/MaBoCode/PasswordManager.git
 
 # cd in the repo
 $ cd password_manager
