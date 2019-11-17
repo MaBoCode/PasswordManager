@@ -37,6 +37,7 @@ def save_to_file(data, filename):
     except FileNotFoundError:
         return False
     else:
+        print("Data successfuly saved.")
         return True
 
 def update_line_in_file(n, data, filename):
@@ -73,7 +74,7 @@ def update_line_in_file(n, data, filename):
     else:
         os.remove(filename)
         os.rename(new_filename, filename)
-        display_msg('Info', 'Updated line %d in `%s`' % (n, filename))
+        print('Successfully updated line %d in `%s`' % (n, filename))
         return True
 
 def delete_line_in_file(n, filename):
@@ -94,7 +95,7 @@ def delete_line_in_file(n, filename):
     else:
         os.remove(filename)
         os.replace(new_filename, filename)
-        display_msg("Info", "Deleted line %d in `%s`." % (n, filename))
+        print("Successfully deleted line %d in `%s`." % (n, filename))
         return True
 
 def fetch_in_file(website, filename):

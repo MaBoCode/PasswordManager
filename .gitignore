@@ -1,5 +1,6 @@
 .data
 .keys.key
+data.txt
 
 backups/
 __pycache__/

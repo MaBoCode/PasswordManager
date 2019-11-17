@@ -27,9 +27,7 @@ def generate(website, email, length = 16, save = True):
 
     data = (website, email, pair)
 
-    if not save:
-        print("Your new password for '%s' is: %s" % (website, password))
-        return True
+    print("Your new password for '%s' is: %s" % (website, password))
 
     return save_to_file(data, DEFAULT_FILENAME)
 
@@ -47,6 +45,11 @@ def save(website, email, password):
     website = sanitize_string(website)
 
     if not is_email_valid(email):
+        display_msg('Error', "Invalid email.")
+        return False
+
+    if len(password) < 15:
+        display_msg('Error', "Password is too short.(> 15)")
         return False
 
     c = Crypto()
@@ -97,9 +100,14 @@ def update(website, email = None, password = None):
 
         display_data(results_display, ["N°", "Website", "Email", "Password"])
 
-        entry_num = int(handle_user_input("Which entry you want to change? [enter n°]: "))
+        entry_num = handle_user_input("Which entry you want to change? [enter n° or type 'c' to cancel]: ")
 
+        if entry_num == 'c':
+            return False
+
+        entry_num = int(entry_num)
         num_list = []
+
         for row in results:
             num_list.append(row[0])
         
@@ -196,6 +204,3 @@ def fetch(website):
     else:
         print("No entry for website '%s'" % (website))
         return False
-
-
-fetch('website3')
