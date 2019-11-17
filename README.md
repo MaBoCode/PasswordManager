@@ -20,9 +20,13 @@ You can:
 
 ## Setup
 Clone the repo.
+
 Run `pip3 install -r password_manager/requirements.txt` in your terminal.
+
 Create a symbolic link named `pma` to `main.py`.
+
 Create a symbolic link named `/bin/pma` to `pma`. (the symlink you created earlier)
+
 Run `pma` in your terminal.
 
 ## Code Examples
