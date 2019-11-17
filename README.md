@@ -2,7 +2,7 @@
 
 You can:
   * Generate a new password:
-  * Your new password will be by default 16 characters long and will include digits, letters (lowercase and uppercase), and symbols for maximum safety.
+    * Your new password will be by default 16 characters long and will include digits, letters (lowercase and uppercase), and symbols for maximum safety.
     * Your password is carefully encrypted using AES-GCM encryption
     * Your password is saved locally
   * Save a password you already had with the corresponding email and website name
