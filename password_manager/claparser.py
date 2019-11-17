@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 
 import sys, argparse
-from core import *
+from password_manager.core import *
 
 DESCRIPTION = """ 
 
@@ -131,7 +131,3 @@ class CLAParser:
         # Sending argument to fetch(website)
         website = args['website'][0]
         fetch(website)
-        
-
-if __name__ == '__main__':
-    CLAParser()

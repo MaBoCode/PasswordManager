@@ -1,8 +1,8 @@
-from utils.functions import *
-from utils.crypto import Crypto
-from utils.generator import Generator
+from password_manager.utils.functions import *
+from password_manager.utils.crypto import Crypto
+from password_manager.utils.generator import Generator
 from tabulate import tabulate
-from utils.constants import *
+from definitions import *
 
 def generate(website, email, length = 16, save = True):
     """
@@ -29,7 +29,7 @@ def generate(website, email, length = 16, save = True):
 
     print("Your new password for '%s' is: %s" % (website, password))
 
-    return save_to_file(data, DEFAULT_FILENAME)
+    return save_to_file(data, DATA_FILE_PATH)
 
 
 """
@@ -57,7 +57,7 @@ def save(website, email, password):
 
     data = (website, email, pair)
 
-    return save_to_file(data, DEFAULT_FILENAME)
+    return save_to_file(data, DATA_FILE_PATH)
 
 
 """
@@ -75,7 +75,7 @@ def update(website, email = None, password = None):
         return False
 
     website = sanitize_string(website)
-    results = fetch_in_file(website, DEFAULT_FILENAME)
+    results = fetch_in_file(website, DATA_FILE_PATH)
 
     # Check if any results
     if len(results) > 0:
@@ -123,6 +123,7 @@ def update(website, email = None, password = None):
                 
                 g = Generator()
                 password = g.generate() if not length else g.generate(int(length))
+                print("Your new password is: %s" % password)
                 pair = c.encrypt(password)
             else:
                 pair = (None, None)
@@ -136,7 +137,7 @@ def update(website, email = None, password = None):
 
         data = (website, email, pair)
 
-        return update_line_in_file(entry_num, data, DEFAULT_FILENAME)
+        return update_line_in_file(entry_num, data, DATA_FILE_PATH)
     else:
         print("No entry for website '%s'" % (website))
         return False
@@ -147,7 +148,7 @@ def delete(website):
         return False
 
     website = sanitize_string(website)
-    results = fetch_in_file(website, DEFAULT_FILENAME)
+    results = fetch_in_file(website, DATA_FILE_PATH)
 
     if(len(results) > 0):
         results_display = []
@@ -173,7 +174,7 @@ def delete(website):
         conf_res = handle_user_input("Are you sure you want to delete this entry ? [y/n]: ")
 
         if conf_res.lower() == 'y':
-            return delete_line_in_file(entry_num, DEFAULT_FILENAME)
+            return delete_line_in_file(entry_num, DATA_FILE_PATH)
 
         return False
     else:
@@ -188,7 +189,7 @@ def fetch(website):
         return False
     
     website = sanitize_string(website)
-    results = fetch_in_file(website, DEFAULT_FILENAME)
+    results = fetch_in_file(website, DATA_FILE_PATH)
 
     if(len(results) > 0):
         results_display = []

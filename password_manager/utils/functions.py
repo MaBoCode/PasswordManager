@@ -1,5 +1,6 @@
 import re, string, os
 from tabulate import tabulate
+from definitions import *
 
 def sanitize_string(s):
     unwanted_chars = string.punctuation
@@ -44,6 +45,8 @@ def update_line_in_file(n, data, filename):
     # data is a tuple: (website, email, pair)
     # pair is a tuple: (key, password)
     new_filename = "data_update.txt"
+    new_file_path = os.path.join(ROOT_DIR_PATH, new_filename)
+
     try:
         # while reading each line in the data file
         # write in a new file
@@ -53,7 +56,7 @@ def update_line_in_file(n, data, filename):
         # TODO: look for a better way
 
         with open(filename, 'r+', encoding='utf-8') as f:
-            with open(new_filename, 'a', encoding='utf-8') as f_update:
+            with open(new_file_path, 'a', encoding='utf-8') as f_update:
                 for i, line in enumerate(f):
                     if i+1 == n:
                         line_list = line.split()
@@ -73,18 +76,20 @@ def update_line_in_file(n, data, filename):
         return False
     else:
         os.remove(filename)
-        os.rename(new_filename, filename)
-        print('Successfully updated line %d in `%s`' % (n, filename))
+        os.rename(new_file_path, filename)
+        print('Successfully updated line %d in `%s`' % (n, DEFAULT_DATA_FILENAME))
         return True
 
 def delete_line_in_file(n, filename):
     # copy lines that are different from the line to delete, in a new file
     # remove the old file and rename the new
     new_filename = "data_delete.txt"
+    new_file_path = os.path.join(ROOT_DIR_PATH, new_filename)
+
     try:
         with open(filename, 'r+', encoding='utf-8') as f:
             try:
-                with open(new_filename, 'a', encoding='utf-8') as f_del:
+                with open(new_file_path, 'a', encoding='utf-8') as f_del:
                     for i, line in enumerate(f):
                         if i+1 != n:
                             f_del.write(line)
@@ -94,8 +99,8 @@ def delete_line_in_file(n, filename):
         return False
     else:
         os.remove(filename)
-        os.replace(new_filename, filename)
-        print("Successfully deleted line %d in `%s`." % (n, filename))
+        os.replace(new_file_path, filename)
+        print("Successfully deleted line %d in `%s`." % (n, DEFAULT_DATA_FILENAME))
         return True
 
 def fetch_in_file(website, filename):
