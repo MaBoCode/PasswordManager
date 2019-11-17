@@ -41,27 +41,27 @@ $ pma -h
 ```
 
 ## Code Examples
-Generate a new password for 'Google' with myemail@gmail.com and save it.
+*Generate a new password for 'Google' with myemail@gmail.com and save it.
 
 &nbsp;&nbsp;&nbsp;&nbsp;`pma generate -w Google -e myemail@gmail.com -s`
 
-Generate a password of 32 characters for 'Oracle'
+*Generate a password of 32 characters for 'Oracle'
 
 &nbsp;&nbsp;&nbsp;&nbsp;`pma generate -w Oracle -e myemail@oracle.com -n 32 -s`
 
-Update the email for 'Google'
+*Update the email for 'Google'
 
 &nbsp;&nbsp;&nbsp;&nbsp;`pma update -w Google -e newemail@gmail.com`
 
-Change the password for 'Oracle'
+*Change the password for 'Oracle'
 
 &nbsp;&nbsp;&nbsp;&nbsp;`pma update -w Oracle -p newOraclePasswordThatIsNotVerySecure`
 
-Delete the entry for 'Google'
+*Delete the entry for 'Google'
 
 &nbsp;&nbsp;&nbsp;&nbsp;`pma delete -w Google`
 
-Show the password and email for 'Oracle'
+*Show the password and email for 'Oracle'
 
 &nbsp;&nbsp;&nbsp;&nbsp;`pma fetch -w Oracle`
 
