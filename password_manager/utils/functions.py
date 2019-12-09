@@ -114,7 +114,7 @@ def fetch_in_file(website, filename):
         for line in f:
             l = line.split()
 
-            if l[0] == website:
+            if l[0].lower() == website.lower():
                 l.insert(0, i+1)
                 result.append(l)
             i += 1
