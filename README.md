@@ -28,7 +28,7 @@ $ git clone https://github.com/MaBoCode/PasswordManager.git
 $ cd password_manager
 
 # Install the requirements
-$ pip3 install -r requirements.xt
+$ pip3 install -r requirements.txt
 
 # Create a symbolic link named `pma` to `main.py`.
 $ ln -s main.py pma
