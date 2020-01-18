@@ -48,8 +48,8 @@ def save(website, email, password):
         display_msg('Error', "Invalid email.")
         return False
 
-    if len(password) < 16:
-        display_msg('Error', "Password is too short.(> 15)")
+    if len(password) < 15:
+        display_msg('Error', "Password is too short.(>= 15)")
         return False
 
     c = Crypto()
