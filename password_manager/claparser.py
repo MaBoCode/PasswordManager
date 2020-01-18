@@ -57,7 +57,7 @@ class CLAParser:
         # Send arguments to generate(website, email, length, save)
         website = args['website'][0]
         email = args['email'][0]
-        length = args['length']
+        length = args['length'][0]
         save = args['save']
 
         generate(website, email, length, save)
