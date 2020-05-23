@@ -3,7 +3,7 @@ from tabulate import tabulate
 from definitions import *
 
 def sanitize_string(s):
-    unwanted_chars = string.punctuation
+    unwanted_chars = string.punctuation.replace('*', '')
     s = s.replace(' ', '')
     for c in unwanted_chars:
         s = s.replace(c, '')
@@ -114,7 +114,7 @@ def fetch_in_file(website, filename):
         for line in f:
             l = line.split()
 
-            if l[0].lower() == website.lower():
+            if (l[0].lower() == website.lower()) or (website == '*') or (website.lower() in l[0].lower()):
                 l.insert(0, i+1)
                 result.append(l)
             i += 1
