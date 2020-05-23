@@ -31,10 +31,7 @@ $ cd password_manager
 $ pip3 install -r requirements.txt
 
 # Create a symbolic link named `pma` to `main.py`.
-$ ln -s main.py pma
-
-# Create a symbolic link named `/bin/pma` to `pma`
-$ ln -s pma /bin/pma
+$ ln -s main.py /usr/local/bin/pma
 
 # You're good to go
 $ pma -h

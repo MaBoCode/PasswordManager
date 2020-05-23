@@ -9,7 +9,7 @@ Password Manager: you can generate, change, delete, save and view password.
 
 """
 
-PROGRAM_NAME = "pam"
+PROGRAM_NAME = "pma"
 
 class CLAParser:
 
