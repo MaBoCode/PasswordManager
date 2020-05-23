@@ -115,6 +115,11 @@ def update(website, email = None, password = None):
             display_msg("Error", "Entry not in list.")
             return False
 
+        for row in results:
+            if entry_num == row[0]:
+                website = row[1]
+                break
+
         if not password:
             res = handle_user_input("Generate a new password ? [y/n]: ")
 
