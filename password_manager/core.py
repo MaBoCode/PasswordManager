@@ -4,7 +4,7 @@ from password_manager.utils.generator import Generator
 from tabulate import tabulate
 from definitions import *
 
-def generate(website, email, length = 16, save = True):
+def generate(website, email, length = 16, save = True, no_symbols = False):
     """
     check website, email
     generate a new password, encrypt it
@@ -16,7 +16,7 @@ def generate(website, email, length = 16, save = True):
         return False
 
     g = Generator()
-    password = g.generate(length)
+    password = g.generate(length, no_symbols)
 
     if not password:
         display_msg("Error", "Couldn't generate password.")

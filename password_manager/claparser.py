@@ -42,13 +42,14 @@ class CLAParser:
     def generate(self):
         # filename generate -w -e [-n] [-y]
         
-        usage = "%s %s -w WEBSITE -e EMAIL [-n LENGTH] [-s] [-h]" % (PROGRAM_NAME, sys.argv[1])
+        usage = "%s %s -w WEBSITE -e EMAIL [-n LENGTH] [-s] [--no-symbols] [-h]" % (PROGRAM_NAME, sys.argv[1])
         parser = argparse.ArgumentParser(description='Generate a new password for a given website and email', usage=usage)
         
         parser.add_argument('-w', dest='website', nargs=1, type=str, required=True, help='specify the website')
         parser.add_argument('-e', dest='email', nargs=1, type=str, required=True, help='specify the email')
         parser.add_argument('-n', dest='length', nargs=1, type=int, default=16, help='specify the length of the password to generate (min 16)')
     
+        parser.add_argument('--no-symbols', action='store_true', default=False)
         parser.add_argument('-s', '--save', action='store_true', default=False)
 
         #Parse arguments starting after command and converting to dict
@@ -57,10 +58,11 @@ class CLAParser:
         # Send arguments to generate(website, email, length, save)
         website = args['website'][0]
         email = args['email'][0]
-        length = args['length'][0]
+        length = args['length']
         save = args['save']
+        no_symbols = args['no_symbols']
 
-        generate(website, email, length, save)
+        generate(website, email, length, save, no_symbols)
     
     def save(self):
         # filename save -w -e -p
