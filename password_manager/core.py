@@ -210,3 +210,15 @@ def fetch(website):
     else:
         print("No entry for website '%s'" % (website))
         return False
+
+def export(file_location, file_format):
+
+    if not file_location:
+        return False
+
+    file_path = sanitize_path(file_location)
+
+    if file_format == "csv":
+        if export_to_csv(file_location):
+            print("Data exported to %s" % file_location)
+    

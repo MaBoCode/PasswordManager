@@ -131,3 +131,20 @@ class CLAParser:
         # Sending argument to fetch(website)
         website = args['website'][0]
         fetch(website)
+
+    def export(self):
+        # program_name export -l new_file_location [-f new_file_format]
+
+        usage = "%s %s -l FILE_LOCATION [-f FILE_FORMAT] [-h]" % (PROGRAM_NAME, sys.argv[1])
+        parser = argparse.ArgumentParser(description='Export passwords', usage=usage)
+
+        parser.add_argument('-l', dest='location', nargs=1, type=str, required=True, help='specify where to save the file')
+        parser.add_argument('-f', dest='format', nargs=1, type=str, default="csv", required=False, help='specify file format: csv, ...')
+
+        args = vars(parser.parse_args(sys.argv[2:]))
+
+        file_location = args['location'][0]
+        file_format = args['format']
+
+        export(file_location, file_format)
+

@@ -1,6 +1,7 @@
-import re, string, os
+import re, string, os, csv
 from tabulate import tabulate
 from definitions import *
+from password_manager.utils.crypto import Crypto
 
 def sanitize_string(s):
     unwanted_chars = string.punctuation.replace('*', '')
@@ -8,6 +9,12 @@ def sanitize_string(s):
     for c in unwanted_chars:
         s = s.replace(c, '')
     return s
+
+def sanitize_path(p):
+    path_regex = "^(.*/)([^/]*)$"
+
+    return re.fullmatch(path_regex, p)
+
 
 def handle_user_input(msg):
     res = sanitize_string(str(input(msg)))
@@ -120,3 +127,39 @@ def fetch_in_file(website, filename):
             i += 1
 
     return result
+
+
+def export_to_csv(file_path):
+
+    filename = "exports.csv"
+
+    if file_path[len(file_path)-1] != '/':
+        file_path += "/"
+
+    if file_path[0] == '~':
+        home_path = os.path.expanduser("~")
+        full_path = home_path + file_path[1:] + filename
+    else:
+        full_path = os.path.abspath(file_path + filename)
+    
+    c = Crypto()
+
+    try:
+        with open(full_path, 'w') as csv_file:
+            writer = csv.writer(csv_file)
+            writer.writerow(["Website", "Email", "Password"])
+
+            with open(DATA_FILE_PATH, 'r') as data_file:
+                for line in data_file:
+                    line_list = line.split(' ')
+                    website = line_list[0]
+                    email = line_list[1]
+                    decrypted_password = c.decrypt(
+                        (line_list[2], line_list[3]))
+                    writer.writerow([website, email, decrypted_password])
+    except:
+        print("Couldn't export data")
+        return False
+    else:
+        print("Data exported to %s" % full_path)
+        return True
