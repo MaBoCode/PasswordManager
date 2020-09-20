@@ -30,8 +30,11 @@ $ cd password_manager
 # Install the requirements
 $ pip3 install -r requirements.txt
 
+# Change file permissions
+$ chmod 700 main.py
+
 # Create a symbolic link named `pma` to `main.py`.
-$ ln -s main.py /usr/local/bin/pma
+$ ln -s $(pwd)/main.py /usr/local/bin/pma
 
 # You're good to go
 $ pma -h
@@ -46,6 +49,10 @@ $ pma -h
 
 &nbsp;&nbsp;&nbsp;&nbsp;`pma generate -w Oracle -e myemail@oracle.com -n 32`
 
+* Generate a password containing only letters and digits
+
+&nbsp;&nbsp;&nbsp;&nbsp;`pma generate -w Oracle -e myemail@oracle.com -n 18 --no-symbols`
+
 * Update the email for 'Google'
 
 &nbsp;&nbsp;&nbsp;&nbsp;`pma update -w Google -e newemail@gmail.com`
@@ -58,9 +65,10 @@ $ pma -h
 
 &nbsp;&nbsp;&nbsp;&nbsp;`pma delete -w Google`
 
-* Show the password and email for 'Oracle'
+* Get the password and email for 'Oracle'
 
 &nbsp;&nbsp;&nbsp;&nbsp;`pma fetch -w Oracle`
 
-## Inspiration
-I don't like that Google stores my passwords.
+* Export all passwords (to csv by default)
+
+&nbsp;&nbsp;&nbsp;&nbsp;`pma export -l ~/Downloads/`
